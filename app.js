@@ -11,6 +11,7 @@ app.use(express.json());
 const port = 4000;
 
 app.use("/api/v1/todos", router);
+app.use(express.static("./public"));
 app.use(notFound);
 
 const startMongoServer = async () => {
