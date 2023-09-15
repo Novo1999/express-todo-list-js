@@ -10,7 +10,6 @@ const getTodos = async () => {
     if (todos.length < 1) {
       allTodos.innerHTML = "<p>No Todos Yet...</p>";
     }
-    console.log(todos);
     const todoData = todos
       .map((item) => {
         const { completed, _id: todoID, todo } = item;
