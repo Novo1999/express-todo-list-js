@@ -25,10 +25,12 @@ const getTodos = async () => {
         ${completed ? "checked" : ""}
         data-id="${todoID}"
       />
-      <p class="task-text font-monospace">${todo}</p>
+      <p class="task-text font-monospace ${
+        completed ? "text-decoration-line-through" : ""
+      }">${todo}</p>
       </div>
         <div class="d-flex gap-3">
-        <a href="edit-Todo.html?id=${todoID}" class="edit-btn" ">✏</a>
+        <a href="edit-Todo.html?id=${todoID}" class="edit-btn">✏</a>
         <button class="delete-btn" data-id="${todoID}">❌</button>
         </div>
       </div> 
