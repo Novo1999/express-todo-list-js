@@ -1,10 +1,12 @@
 const allTodos = document.querySelector(".all-todos");
+const createTodoInput = document.querySelector(".create-todo");
+const submitBtn = document.querySelector(".submit-btn");
 
 const getTodos = async () => {
   try {
     const {
       data: { todos },
-    } = await axios.get("/api/v1/todos");
+    } = await axios.get("api/v1/todos");
     if (todos.length < 1) {
       allTodos.innerHTML = "<p>No Todos Yet...</p>";
     }
@@ -39,8 +41,6 @@ const getTodos = async () => {
   }
 };
 
-getTodos();
-
 const deleteTodoFromApi = async (id) => {
   try {
     const data = await axios.delete(`/api/v1/todos/${id}`);
@@ -62,4 +62,20 @@ const deleteTodo = () => {
   });
 };
 
+const createTodoinApi = async (e) => {
+  e.preventDefault();
+  try {
+    await axios.post("api/v1/todos", { todo: createTodoInput.value });
+    getTodos();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const createTodo = () => {
+  submitBtn.addEventListener("click", (e) => createTodoinApi(e));
+};
+
+getTodos();
+createTodo();
 deleteTodo();

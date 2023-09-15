@@ -14,8 +14,6 @@ const getSingleTodo = async (id) => {
   }
 };
 
-getSingleTodo(id);
-
 const editTodoInApi = async (e) => {
   e.preventDefault();
   try {
@@ -32,13 +30,5 @@ const editTodo = () => {
   editBtn.addEventListener("click", (e) => editTodoInApi(e));
 };
 
+getSingleTodo(id);
 editTodo();
-
-const setInputValue = () => {
-  editTodoValue.addEventListener("change", updateValue);
-};
-const updateValue = (e) => {
-  editTodoValue.value = e.target.value;
-};
-
-setInputValue();
