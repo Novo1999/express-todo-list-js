@@ -24,6 +24,7 @@ const getTodos = async () => {
         name="task"
         class="checkbox"
         ${completed ? "checked" : ""}
+        data-id="${todoID}"
       />
       <p class="task-text font-monospace">${todo}</p>
       </div>
@@ -63,6 +64,7 @@ const deleteTodo = () => {
 };
 
 const createTodoinApi = async (e) => {
+  if (!createTodoInput.value) return;
   e.preventDefault();
   try {
     await axios.post("api/v1/todos", { todo: createTodoInput.value });
@@ -76,6 +78,29 @@ const createTodo = () => {
   submitBtn.addEventListener("click", (e) => createTodoinApi(e));
 };
 
-getTodos();
+// handling the checkbox edit
+
+const editTodo = () => {
+  allTodos.addEventListener("click", (e) => {
+    if (e.target.classList.contains("checkbox")) {
+      const id = e.target.dataset.id;
+      editTodoInApi(e, id);
+    }
+  });
+};
+
+const editTodoInApi = async (e, id) => {
+  try {
+    await axios.patch(`api/v1/todos/${id}`, {
+      completed: e.target.checked ? true : false,
+    });
+    getTodos();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 createTodo();
+getTodos();
+editTodo();
 deleteTodo();
