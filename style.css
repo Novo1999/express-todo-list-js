@@ -1,0 +1,9 @@
+.task-text {
+  margin-bottom: 0px;
+  font-size: 20px;
+}
+.checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
