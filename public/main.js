@@ -1,15 +1,14 @@
 const allTodos = document.querySelector(".all-todos");
 const createTodoInput = document.querySelector(".create-todo");
 const submitBtn = document.querySelector(".submit-btn");
+const notification = document.querySelector(".notification");
 
 const getTodos = async () => {
   try {
     const {
       data: { todos },
     } = await axios.get("api/v1/todos");
-    if (todos.length < 1) {
-      allTodos.innerHTML = "<p>No Todos Yet...</p>";
-    }
+
     const todoData = todos
       .map((item) => {
         const { completed, _id: todoID, todo } = item;
@@ -37,18 +36,28 @@ const getTodos = async () => {
   </div>`;
       })
       .join("");
-    allTodos.innerHTML = todoData;
+    if (todos.length < 1) {
+      allTodos.innerHTML = "<p>No Todos Yet...</p>";
+    } else allTodos.innerHTML = todoData;
   } catch (error) {
     console.log(error);
   }
 };
 
+let timeoutId;
+
 const deleteTodoFromApi = async (id) => {
   try {
-    const data = await axios.delete(`/api/v1/todos/${id}`);
-    if (!data) {
-      alert("Couldn't Delete Todo");
+    const response = await axios.delete(`/api/v1/todos/${id}`);
+    if (!response) {
+      notification.innerText = "Couldn't Delete Todo";
     }
+    notification.innerText = `${response.data.msg} ${response.data.deleted}`;
+
+    timeoutId = setTimeout(() => {
+      notification.innerText = "";
+    }, 1000);
+
     getTodos();
   } catch (error) {
     console.log(error);
@@ -60,6 +69,7 @@ const deleteTodo = () => {
     if (e.target.classList.contains("delete-btn")) {
       const id = e.target.dataset.id;
       deleteTodoFromApi(id);
+      clearTimeout(timeoutId);
     }
   });
 };
@@ -70,6 +80,7 @@ const createTodoinApi = async (e) => {
   try {
     await axios.post("api/v1/todos", { todo: createTodoInput.value });
     getTodos();
+    createTodoInput.value = "";
   } catch (error) {
     console.log(error);
   }

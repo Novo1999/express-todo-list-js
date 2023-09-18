@@ -22,13 +22,13 @@
       class="bg-black vh-100 d-flex justify-content-center align-items-center flex-column"
     >
       <h1 class="text-warning">To-Do List</h1>
-      <div class="bg-info w-50 p-4 h-75 rounded-5 d-flex flex-column gap-5 overflow-y-auto">
+      <div class="bg-info w-50 p-4 h-75 rounded-5 d-flex flex-column gap-5 overflow-y-auto position-relative">
         <form
           class="d-flex justify-content-center align-items-center gap-4"
         >
           <div class="mb-2">
             <label class="form-label">New Todo</label>
-            <input type="text" class="form-control w-100  create-todo" />
+            <input type="text" class="form-control w-100 create-todo" />
             <div id="bottomtext" class="form-text">
               Add something to the list...
             </div>
@@ -37,8 +37,10 @@
           <button type="submit" class="btn btn-primary submit-btn">Submit</button>
         </form>
         <div class="all-todos">
-        <div class="test"></div>
       </div>
+        <p class="position-absolute top-0 p-2 font-monospace notification">
+          
+        </p>  
     </div>
 
     <script type="module" src="./main.js"></script>
